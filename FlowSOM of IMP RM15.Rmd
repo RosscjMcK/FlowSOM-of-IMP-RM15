@@ -136,7 +136,7 @@ colnames(catgg)
 transformList <- flowCore::estimateLogicle(catgg, channels = colnames(catgg[,c(1:40)]), m=5) # once again we have limited ourselves to the fluorescent channels
 catgg <- flowCore::transform(catgg, transformList)
 
-flowSOM.resb <- FlowSOM(catff, scale = FALSE, colsToUse = c(1, 5:7, 9:10, 12:13, 16:22, 25:32, 34:37, 39:40), maxMeta=20, seed=1111)
+flowSOM.resb <- FlowSOM(catgg, scale = FALSE, colsToUse = c(1, 5:7, 9:10, 12:13, 16:22, 25:32, 34:37, 39:40), maxMeta=20, seed=1111)
 ```
 
 Ensure channel markers are in the same order and then map the new data to the flowSOM grid.
@@ -149,11 +149,14 @@ all.equal(channels1$desc, channels2$desc)
 
 # check names are the same
 table(colnames(catgg) %in% channels1$name)
-# all are the same, just the order is different
+# name SBV515 and the names of TBET and GzmB need changing to make them the same
 
-catfg <- catgg[,channels1$name]
-channels2 <- catffg@parameters@data
-all.equal(channels1$desc, channels2$desc)
+
+
+#catfg <- catgg[,channels1$name]
+#channels2 <- catfg@parameters@data
+#all.equal(channels1$desc, channels2$desc)
+
 # now it's good
 ## of note, I also ran without reordering, and it was identical. NewData appears to map by channel name already
 
